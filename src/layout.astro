@@ -1,0 +1,244 @@
+---
+import type { WithContext, Thing } from 'schema-dts';
+import { jsonLd } from './json-ld';
+import { ViewTransitions } from 'astro:transitions';
+
+export type Props = {
+  /**
+   * The title of the page. The ideal length is approximately 60 characters.
+   * When exceeding this limit, search engines will truncate the title.
+   *
+   * @default Tidi
+   */
+  title?: string;
+
+  /**
+   * The description of the page. The ideal length is between 70 and 155 characters.
+   * Minimum length is 70 characters. When exceeding this limit, search engines will
+   * truncate the description.
+   *
+   * @default Default description
+   */
+  description?: string;
+
+  /**
+   * The headline on the page. The ideal length is approximately 47 characters.
+   *
+   * @default title
+   */
+  headline?: string;
+
+  /**
+   * The title for social media platforms. The ideal length is approximately 47 characters.
+   * When exceeding this limit, platforms will truncate the title. LinkedIn will truncate
+   * the title at 119 characters.
+   *
+   * @default Uses the title prop
+   */
+  socialMediaTitle?: string;
+
+  /**
+   * The description for social media platforms. Should not exceed 85 characters to fit most platforms.
+   *
+   * @default Uses the description prop
+   */
+  socialMediaDescription?: string;
+
+  /**
+   * Images for social media platforms. The ideal size is 1200 x 630 pixels.
+   * When providing more than one image, the first image will be used, but some
+   * platforms will allow the user to choose which image to use.
+   *
+   * @default ['/images/social-media-image.png']
+   */
+  images?: string[];
+
+  /**
+   * The type of the page.
+   *
+   * @default website
+   */
+  type?: 'website' | 'article';
+
+  /**
+   * The path of the page. Used to generate the canonical URL.
+   */
+  path?: string;
+
+  /**
+   * The date the page was published. Only used with type = 'article'.
+   */
+  articlePublishDate?: Date;
+
+  /**
+   * The date the page was last modified. Only used with type = 'article'.
+   */
+  articleAuthor?: string;
+
+  /**
+   * JSON-LD structured data for the page.
+   */
+  schema?: WithContext<Thing> | WithContext<Thing>[];
+};
+
+const defaultDescription = `
+  Tidi makes things just easier.
+ `;
+
+const defaultTitle = 'Tidi';
+
+const defaultImage = new URL('/images/social-media-image.png', Astro.site);
+
+const {
+  title = defaultTitle,
+  description = defaultDescription,
+  socialMediaTitle = title ?? defaultTitle,
+  socialMediaDescription = description ?? defaultDescription,
+  images = [defaultImage.toString()],
+  type = 'website',
+  path,
+  schema,
+  articleAuthor,
+  articlePublishDate,
+} = Astro.props;
+
+// const parsedImages = images.map((image) => parseSocialMediaImage(image));
+// const [image] = parsedImages;
+
+const [image] = images;
+
+const makeUrl = (newPath: string) => new URL(newPath, Astro.site).toString();
+
+const canonical = new URL(path, Astro.site);
+---
+
+<html lang="nb">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href={makeUrl('favicon.svg')} />
+    <link rel="shortcut icon" href={makeUrl('favicon.ico')} />
+    <meta name="viewport" content="width=device-width" />
+    <link type="text/plain" rel="author" href={makeUrl('humans.txt')} />
+    <ViewTransitions />
+
+    <title>{title}</title>
+    <meta name="robots" content="index,follow" />
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={socialMediaTitle} />
+    <meta name="twitter:description" content={socialMediaDescription} />
+    <meta name="twitter:image" content={image} />
+
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={socialMediaTitle} />
+    <meta property="og:description" content={socialMediaDescription} />
+    {images.map(img => <meta property="og:image" content={img} />)}
+    <meta property="og:site_name" content="Tidi" />
+
+    {
+      type == 'article' && articleAuthor && (
+        <meta property="article:author" content={articleAuthor} />
+      )
+    }
+    {
+      type == 'article' && articlePublishDate && (
+        <>
+          <meta
+            name="publish_date"
+            property="og:publish_date"
+            content={articlePublishDate.toISOString()}
+          />
+          <meta
+            property="article:published_time"
+            content={articlePublishDate.toISOString()}
+          />
+        </>
+      )
+    }
+
+    {schema && <script type="application/ld+json" set:html={jsonLd(schema)} />}
+  </head>
+  <body>
+    <slot />
+    <style is:global>
+      :root {
+        --base-color: 147 54%;
+      }
+
+      html {
+        font-family: system-ui,
+          -apple-system,
+          sans-seri;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #1d1d1d;
+
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-feature-settings: 'kern', 'liga';
+      }
+
+      body {
+        margin: 0;
+        overflow-y: scroll;
+        -webkit-text-size-adjust: 100%;
+        touch-action: manipulation;
+        caret-color: hsl(var(--base-color) 40%);
+      }
+
+      *,
+      ::before,
+      ::after {
+        box-sizing: border-box;
+      }
+
+      ::selection {
+        background: hsl(var(---base-color) 90%);
+        color: #1d1d1d;
+      }
+
+      body *::-webkit-scrollbar {
+        background-color: hsl(var(---base-color) 90%);
+      }
+
+      body *::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: hsl(var(---base-color) 90%);
+        border: 3px solid hsl(var(---base-color) 90%);
+      }
+
+      body *::-webkit-scrollbar-thumb:hover {
+        background-color: hsl(var(---base-color) 90%);
+      }
+
+      p {
+        margin-inline-end: 1em;
+      }
+
+      a {
+        --link-color: hsl(var(---base-color) 40%);
+
+        color: var(--link-color);
+        text-decoration-color: var(--link-color);
+        text-decoration-skip-ink: none;
+        text-decoration-thickness: 0.125em;
+        text-underline-offset: 0.125em;
+      }
+
+      @media (hover) {
+        a:hover {
+          --link-color: hsl(var(---base-color) 5%);
+        }
+      }
+
+      a:focus-visible {
+        outline-color: var(--link-color);
+        outline-offset: 0.4em;
+        border-radius: 0.225em;
+      }
+    </style>
+  </body>
+</html>
