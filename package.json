@@ -1,0 +1,22 @@
+{
+  "name": "tidi-website",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "format": "biome format . --write",
+    "lint": "biome lint ."
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.3.1",
+    "astro": "^4.0.3",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.4.1"
+  }
+}
