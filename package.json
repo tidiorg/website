@@ -2,6 +2,7 @@
   "name": "tidi-website",
   "type": "module",
   "version": "0.0.1",
+  "packageManager": "pnpm@8.10.5",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
