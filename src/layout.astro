@@ -174,7 +174,7 @@ const canonical = new URL(path, Astro.site);
           sans-seri;
         font-size: 16px;
         line-height: 1.5;
-        color: #1d1d1d;
+        color: hsl(var(--base-color) 5%);
 
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -196,22 +196,22 @@ const canonical = new URL(path, Astro.site);
       }
 
       ::selection {
-        background: hsl(var(---base-color) 90%);
-        color: #1d1d1d;
+        background: hsl(var(--base-color) 90%);
+        color: hsl(var(--base-color) 5%);
       }
 
       body *::-webkit-scrollbar {
-        background-color: hsl(var(---base-color) 90%);
+        background-color: hsl(var(--base-color) 90%);
       }
 
       body *::-webkit-scrollbar-thumb {
         border-radius: 10px;
-        background-color: hsl(var(---base-color) 90%);
-        border: 3px solid hsl(var(---base-color) 90%);
+        background-color: hsl(var(--base-color) 90%);
+        border: 3px solid hsl(var(--base-color) 90%);
       }
 
       body *::-webkit-scrollbar-thumb:hover {
-        background-color: hsl(var(---base-color) 90%);
+        background-color: hsl(var(--base-color) 90%);
       }
 
       p {
@@ -219,7 +219,7 @@ const canonical = new URL(path, Astro.site);
       }
 
       a {
-        --link-color: hsl(var(---base-color) 40%);
+        --link-color: hsl(var(--base-color) 40%);
 
         color: var(--link-color);
         text-decoration-color: var(--link-color);
@@ -230,7 +230,7 @@ const canonical = new URL(path, Astro.site);
 
       @media (hover) {
         a:hover {
-          --link-color: hsl(var(---base-color) 5%);
+          --link-color: hsl(var(--base-color) 5%);
         }
       }
 
