@@ -1,5 +1,11 @@
 ---
 import Layout from '../../layout.astro';
+import { Image } from 'astro:assets';
+import TidiDashboard from './Tidi_Dashboard.png';
+import TidiOverview from './Tidi_Overview.png';
+import TidiTransactions from './Tidi_Transactions.png';
+import TidiCalendar from './Tidi_Calendar.png';
+
 ---
 
 <Layout path="">
@@ -8,25 +14,25 @@ import Layout from '../../layout.astro';
     
     <p>
         <h2>Dashboard</h2>
-        <img src="src/pages/product/Tidi Dashboard.png" alt="Tidi Dashboard" />
+        <Image src={TidiDashboard} alt="Tidi Dashboard" width={TidiDashboard.width / 2}  />
         <div class="img-text">See the costs of all licences and assets in the company</div>
     </p>
     
     <p>
         <h2>Know when to take actions</h2>
-        <img src="src/pages/product/Tidi Calendar.png" alt="Tidi Calendar" />
+        <Image src={TidiCalendar} alt="Tidi Calendar" width={TidiCalendar.width / 2}  />
         <div class="img-text">Do you know when the licences expires and do you need to take action in advance?</div>
     </p>
     
     <p>
         <h2>Transaction history</h2>
-        <img src="src/pages/product/Tidi Transactions.png" alt="Tidi Transactions" />
+        <Image src={TidiTransactions} alt="Tidi Transactions" width={TidiTransactions.width / 2}  />
         <div class="img-text">Make sure you have all your attachments ready for accounting</div>
     </p>
 
     <p>
       <h2>Drill down into one subscription</h2>
-      <img src="src/pages/product/Tidi Overview.png" alt="Tidi drilldown to get overview" />
+      <Image src={TidiOverview} alt="Tidi drilldown to get overview" width={TidiOverview.width / 2}  />
       <div class="img-text">Get the necessary insights for each subscription</div>
     </p>
 
@@ -34,17 +40,14 @@ import Layout from '../../layout.astro';
 </Layout>
 
 <style>
-img {
-    width: 100%;
-  }
 
   p {
-    margin-bottom: 100px;
+    margin-bottom: 6rem;
   }
   
   div.img-text {
     background-color: hsl(var(--base-color) 85%);
-    padding:10px;
+    padding:1rem;
     text-align: center;
   }
 </style>
