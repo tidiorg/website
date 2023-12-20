@@ -229,6 +229,11 @@ const canonical = new URL(path, Astro.site);
         text-underline-offset: 0.125em;
       }
 
+      .container {
+        display:flex;
+        flex-direction: column;
+      }
+
       @media (hover) {
         a:hover {
           --link-color: hsl(var(--base-color) 5%);
