@@ -84,10 +84,10 @@ export type Props = {
 };
 
 const defaultDescription = `
-  Tidi makes things just easier.
+  Tidi.app - makes your company gain control of subscriptions
  `;
 
-const defaultTitle = 'Tidi';
+const defaultTitle = 'Tidi.app';
 
 const defaultImage = new URL('/images/social-media-image.png', Astro.site);
 
@@ -172,9 +172,7 @@ const canonical = new URL(path, Astro.site);
       }
 
       html {
-        font-family: system-ui,
-          -apple-system,
-          sans-seri;
+        font-family: 'Montserrat', sans-serif;
         font-size: 16px;
         line-height: 1.5;
         color: hsl(var(--base-color) 5%);
